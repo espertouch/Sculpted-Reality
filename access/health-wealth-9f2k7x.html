@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Health &amp; Wealth Sound Kit — Sculpted Reality</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void: #080810;
+    --panel: #11112E;
+    --border: #1E1E4A;
+    --violet: #7B2FFF;
+    --violet-glow: rgba(123, 47, 255, 0.25);
+    --violet-soft: #9B5FFF;
+    --gold: #C9A84C;
+    --white: #F0F0FF;
+    --muted: #8888AA;
+    --font-display: 'Cinzel', serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  body {
+    background: var(--void);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.2rem;
+  }
+
+  .wrap { width: 100%; max-width: 460px; }
+
+  .brand {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2.2rem;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.2rem 1.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), var(--violet));
+  }
+
+  /* ── GATE ── */
+  #gate h1 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.6rem;
+    text-align: center;
+  }
+  #gate p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    text-align: center;
+    margin-bottom: 1.6rem;
+  }
+  #gate input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    text-align: center;
+    padding: 0.85rem 1rem;
+    outline: none;
+    text-transform: uppercase;
+  }
+  #gate input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(123,47,255,0.1); }
+  #gate button {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.9rem;
+    background: var(--violet);
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: 0 0 24px var(--violet-glow);
+  }
+  #gate button:hover { background: var(--violet-soft); }
+  #gateError {
+    display: none;
+    color: #E08A8A;
+    font-size: 0.78rem;
+    text-align: center;
+    margin-top: 0.8rem;
+  }
+
+  /* ── PLAYER ── */
+  #playerPanel { display: none; }
+  .kit-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+    text-align: center;
+    margin-bottom: 0.4rem;
+  }
+  .kit-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 1.8rem;
+  }
+  .player-row { display: flex; align-items: center; gap: 0.8rem; }
+  .play-btn {
+    flex-shrink: 0;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--violet-soft);
+    background: rgba(123, 47, 255, 0.1);
+    color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .play-btn:hover { background: rgba(123, 47, 255, 0.22); box-shadow: 0 0 16px var(--violet-glow); }
+  .play-btn svg { width: 16px; height: 16px; }
+  .progress-track {
+    flex: 1; height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(to right, var(--violet-soft), var(--gold));
+    border-radius: 2px;
+  }
+  .time-display {
+    flex-shrink: 0; font-size: 0.7rem; color: var(--muted);
+    font-variant-numeric: tabular-nums; min-width: 34px; text-align: right;
+  }
+  .player-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 0.9rem;
+  }
+  .loop-tag { font-size: 0.68rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; }
+  .down-link {
+    font-size: 0.7rem; color: var(--muted); text-decoration: none;
+    border-bottom: 1px dotted var(--muted);
+  }
+  .down-link:hover { color: var(--white); }
+
+  .footer-note {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 1.6rem;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <p class="brand">The Esper · Sculpted Reality</p>
+
+    <div class="panel">
+
+      <!-- Access gate -->
+      <div id="gate">
+        <h1>Your Kit Is Waiting</h1>
+        <p>Enter the access code from your confirmation message to unlock your Health &amp; Wealth Sound Kit.</p>
+        <input type="text" id="codeInput" placeholder="Access code" autocomplete="off" />
+        <button onclick="tryUnlock()">Unlock Kit</button>
+        <p id="gateError">That code didn't match — check your confirmation message and try again.</p>
+      </div>
+
+      <!-- Player, revealed after unlock -->
+      <div id="playerPanel">
+        <div class="kit-title">Health &amp; Wealth</div>
+        <div class="kit-sub">Your full sound kit — play it here anytime, loops continuously, no download required.</div>
+
+        <div class="player-row">
+          <button class="play-btn" id="playBtn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="progress-track" id="track">
+            <div class="progress-fill" id="fill"></div>
+          </div>
+          <span class="time-display" id="timeDisplay">0:00</span>
+        </div>
+
+        <div class="player-meta">
+          <span class="loop-tag">⟲ Loops Continuously</span>
+          <a class="down-link" id="downloadLink" href="../audio/full/health-wealth-full.mp3" download>Download file</a>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="footer-note">This page is private and isn't linked from the public site.<br />Please don't share the link — it's yours.</p>
+  </div>
+
+  <script>
+    // ── Access code ──
+    // Change this whenever a link leaks. It's a soft gate, not real
+    // security (anyone with the page's source can read it) — its job is
+    // to stop casual link-sharing, not stop a determined bad actor.
+    const ACCESS_CODE  = 'HW-SANCTUARY';
+    const STORAGE_KEY  = 'unlocked-health-wealth';
+    const AUDIO_SRC    = '../audio/full/health-wealth-full.mp3';
+
+    function tryUnlock() {
+      const val = document.getElementById('codeInput').value.trim().toUpperCase();
+      if (val === ACCESS_CODE) {
+        localStorage.setItem(STORAGE_KEY, '1');
+        showPlayer();
+      } else {
+        document.getElementById('gateError').style.display = 'block';
+      }
+    }
+
+    document.getElementById('codeInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') tryUnlock();
+    });
+
+    function showPlayer() {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('playerPanel').style.display = 'block';
+      initPlayer();
+    }
+
+    // Skip the gate if this browser already unlocked it before
+    if (localStorage.getItem(STORAGE_KEY) === '1') {
+      showPlayer();
+    }
+
+    // ── Full-length looping player (no preview cap) ──
+    function initPlayer() {
+      const audio = new Audio();
+      audio.loop    = true;
+      audio.preload = 'none';
+
+      const playBtn     = document.getElementById('playBtn');
+      const iconPlay     = playBtn.querySelector('.icon-play');
+      const iconPause     = playBtn.querySelector('.icon-pause');
+      const track        = document.getElementById('track');
+      const fill         = document.getElementById('fill');
+      const timeDisplay  = document.getElementById('timeDisplay');
+
+      let sourceLoaded = false;
+      function ensureSource() {
+        if (!sourceLoaded) { audio.src = AUDIO_SRC; sourceLoaded = true; }
+      }
+
+      function formatTime(sec) {
+        if (!isFinite(sec) || sec < 0) return '0:00';
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+      }
+
+      playBtn.addEventListener('click', () => {
+        ensureSource();
+        if (audio.paused) {
+          audio.play().catch(() => {});
+        } else {
+          audio.pause();
+        }
+      });
+
+      audio.addEventListener('play',  () => { iconPlay.style.display = 'none';  iconPause.style.display = 'block'; });
+      audio.addEventListener('pause', () => { iconPlay.style.display = 'block'; iconPause.style.display = 'none'; });
+
+      audio.addEventListener('timeupdate', () => {
+        const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+        fill.style.width = pct + '%';
+        timeDisplay.textContent = formatTime(audio.currentTime);
+      });
+
+      track.addEventListener('click', (e) => {
+        if (!audio.duration) return;
+        const rect = track.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        audio.currentTime = pct * audio.duration;
+      });
+
+      // Cache the full file for offline replay, same as the public preview.
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('../sw.js').catch(() => {});
+      }
+    }
+  </script>
+</body>
+</html>
